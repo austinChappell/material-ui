@@ -185,7 +185,7 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
     }
   }
 
-  const items = React.Children.map(children, child => {
+  const items = React.Children.map(children, (child, index) => {
     if (!React.isValidElement(child)) {
       return null;
     }
@@ -217,6 +217,11 @@ const SelectInput = React.forwardRef(function SelectInput(props, ref) {
       if (selected && computeDisplay) {
         displaySingle = child.props.children;
       }
+    }
+
+    // If there is not a value, select the first MenuItem for accessibility
+    if (!selected && index === 0) {
+      selected = true;
     }
 
     return React.cloneElement(child, {
